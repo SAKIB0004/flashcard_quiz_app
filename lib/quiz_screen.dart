@@ -65,59 +65,103 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          //mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      color: Colors.brown.shade800,
-                      size: 32,
-                    ),
-                    onPressed: () {
-                      //drawer: showDrawer();
-                    },
-                  ),
-
-                  Text("Quiz Test",
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.brown.shade600,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  CircleAvatar(
-                    radius: 30, // You can adjust the size
-                    backgroundImage: AssetImage("images/intro_Screen.png"),
-                  ),
-                ],
+        drawer: Drawer(
+          backgroundColor: Colors.brown.shade100,
+          width: 280,
+          elevation: 20,
+          shadowColor: Colors.grey,
+          child: Column(
+            children: [
+              SizedBox(height: 20),
+              CircleAvatar(
+                radius: 50, // You can adjust the size
+                backgroundImage: AssetImage("images/intro_Screen.png"),
               ),
-            ),
-            SizedBox(height: 160),
-
-            FlashcardWidget(
-                flashcards: flashcards[currentIndex],
-                onEdit: () => _addOrEditFlashcard(
-                flashcard: flashcards[currentIndex],
-                index: currentIndex,
+              SizedBox(height: 20),
+              Text("Quiz App",
+                style: TextStyle(
+                  fontSize: 24,
+                  color: Colors.brown.shade600,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              onDelete: _deleteCurrentCard,
-            ),
-
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              Divider(height: 50,color: Colors.brown.shade700,),
+              //SizedBox(height: 10),
+              ListTile(
+                leading: Icon(Icons.home, color: Colors.brown.shade800),
+                title: Text("Home", style: TextStyle(color: Colors.brown.shade800)),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/');
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.info, color: Colors.brown.shade800),
+                title: Text("About", style: TextStyle(color: Colors.brown.shade800)),
+                onTap: () {
+                  // Handle About action
+                },
+              ),
+            ],
+          ),
+        ),
+        body: Builder(
+          builder: (context) {
+            return Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(onPressed: _previousCard, child: Text("Previous")),
-                ElevatedButton(onPressed: _nextCard, child: Text("Next")),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.menu,
+                          color: Colors.brown.shade800,
+                          size: 32,
+                        ),
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                        },
+                      ),
+
+                      Text("Quiz Test",
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.brown.shade600,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      CircleAvatar(
+                        radius: 30, // You can adjust the size
+                        backgroundImage: AssetImage("images/intro_Screen.png"),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 160),
+
+                FlashcardWidget(
+                    flashcards: flashcards[currentIndex],
+                    onEdit: () => _addOrEditFlashcard(
+                    flashcard: flashcards[currentIndex],
+                    index: currentIndex,
+                  ),
+                  onDelete: _deleteCurrentCard,
+                ),
+
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(onPressed: _previousCard, child: Text("Previous")),
+                    ElevatedButton(onPressed: _nextCard, child: Text("Next")),
+                  ],
+                ),
               ],
-            ),
-          ],
+            );
+          }
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _addOrEditFlashcard(),

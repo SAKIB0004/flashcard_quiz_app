@@ -11,6 +11,7 @@
 - ✅ Add new flashcards
 - ✅ Edit existing flashcards
 - ✅ Delete flashcards
+- ✅ Drawer navigation with menu icon
 - ✅ Clean, modern interface with responsive design
 
 
@@ -22,6 +23,6 @@
 |---------------------------|--------------------------|-------------------------|
 | ![intro](ui_images/1.png) | ![home](ui_images/2.png) | ![ans](ui_images/3.png) |
 
-| Add Flashcard           | Edit Flashcard           |
-|-------------------------|--------------------------|
-| ![add](ui_images/5.png) | ![edit](ui_images/4.png) |
+| Add Flashcard           | Edit Flashcard           | Drawer                     |
+|-------------------------|--------------------------|----------------------------|
+| ![add](ui_images/5.png) | ![edit](ui_images/4.png) | ![drawer](ui_images/6.png) |
