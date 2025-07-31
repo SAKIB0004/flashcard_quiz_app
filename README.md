@@ -1,16 +1,27 @@
-# flashcard_quiz_app
+# 📚 Flutter Flashcard Quiz App
 
-A new Flutter project.
+>A simple and interactive **flashcard-based quiz app** built using Flutter. Designed to help users learn efficiently by flipping flashcards with questions and answers. Customize your own flashcards and navigate through them easily.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## ✨ Features
 
-A few resources to get you started if this is your first Flutter project:
+- ✅ View flashcards with **question-answer** toggle
+- ✅ Navigate between cards using **Next** and **Previous** buttons
+- ✅ Add new flashcards
+- ✅ Edit existing flashcards
+- ✅ Delete flashcards
+- ✅ Clean, modern interface with responsive design
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 🖼️ Screenshots
+
+| Intro Screen              | Home Screen              | Answer Flashcard        |
+|---------------------------|--------------------------|-------------------------|
+| ![intro](ui_images/1.png) | ![home](ui_images/2.png) | ![ans](ui_images/3.png) |
+
+| Add Flashcard           | Edit Flashcard           |
+|-------------------------|--------------------------|
+| ![add](ui_images/5.png) | ![edit](ui_images/4.png) |

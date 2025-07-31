@@ -1,88 +1,96 @@
-import 'package:flutter/material.dart';
 import 'flashcards.dart';
+import 'package:flutter/material.dart';
 
 class FlashcardWidget extends StatefulWidget {
-  final Flashcard flashcard;
-  FlashcardWidget({required this.flashcard});
+  final Flashcard flashcards;
+  final VoidCallback onEdit;
+  final VoidCallback onDelete;
+
+  const FlashcardWidget({
+    super.key,
+    required this.flashcards,
+    required this.onEdit,
+    required this.onDelete,
+  });
 
   @override
-  _FlashcardWidgetState createState() => _FlashcardWidgetState();
+  State<FlashcardWidget> createState() => _FlashcardWidgetState();
 }
 
-class _FlashcardWidgetState extends State<FlashcardWidget> with SingleTickerProviderStateMixin {
+class _FlashcardWidgetState extends State<FlashcardWidget> {
   bool _showBack = false;
-  late AnimationController _controller;
-  late Animation<double> _flipAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(duration: Duration(milliseconds: 400), vsync: this);
-    _flipAnimation = Tween<double>(begin: 0, end: 1).animate(_controller);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   void _toggleCard() {
     setState(() {
       _showBack = !_showBack;
-      if (_showBack) {
-        _controller.forward();
-      } else {
-        _controller.reverse();
-      }
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _flipAnimation,
-      builder: (context, child) {
-        final isFront = _flipAnimation.value < 0.5;
-        return GestureDetector(
-          onTap: _toggleCard,
-          child: AnimatedBuilder(
-            animation: _flipAnimation,
-            builder: (context, child) {
-              final isFront = _flipAnimation.value < 0.5;
-
-              return Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.rotationY(_flipAnimation.value * 3.1416),
-                child: Container(
-                  height: 200,
-                  width: 300,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [BoxShadow(blurRadius: 10, color: Colors.black26)],
-                  ),
-                  child: Transform(
-                    alignment: Alignment.center,
-                    transform: isFront
-                        ? Matrix4.identity()
-                        : Matrix4.rotationY(3.1416), // Flip text back
-                    child: Text(
-                      isFront
-                          ? widget.flashcard.question
-                          : widget.flashcard.answer,
-                      style: TextStyle(fontSize: 20),
-                      textAlign: TextAlign.center,
+    return Column(
+      children: [
+        Stack(
+            children: [
+              Container(
+                width: 300,
+                height: 200,
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: _showBack ? Colors.lightBlue.shade100 : Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Text(
+                    _showBack ? widget.flashcards.answer : widget.flashcards
+                        .question,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.brown.shade800,
                     ),
                   ),
                 ),
-              );
-            },
-          ),
-        );
+              ),
 
-      },
+              Positioned(
+                top: 20,
+                right: 10,
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.edit),
+                      tooltip: 'Edit this flashcard',
+                      onPressed: widget.onEdit,
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.delete),
+                      tooltip: 'Delete this flashcard',
+                      onPressed: widget.onDelete,
+                    ),
+                  ],
+                ),
+              )
+            ]
+        ),
+
+        ElevatedButton(
+          onPressed: _toggleCard,
+          child: Text(_showBack ? 'Show Question' : 'Show Answer'),
+        ),
+      ],
     );
   }
 }
+

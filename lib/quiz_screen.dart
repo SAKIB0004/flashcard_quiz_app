@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'flashcards.dart';
+import 'flashcards_dialog.dart';
 import 'flashcards_widget.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -24,9 +24,7 @@ class _QuizScreenState extends State<QuizScreen> {
     Flashcard(question: 'What is BuildContext?', answer: 'It provides context about the location of a widget in the widget tree.')
   ];
 
-
   int currentIndex = 0;
-
   void _nextCard() {
     setState(() {
       if (currentIndex < flashcards.length - 1) currentIndex++;
@@ -37,8 +35,31 @@ class _QuizScreenState extends State<QuizScreen> {
       if (currentIndex > 0) currentIndex--;
     });
   }
-
-
+  void _addOrEditFlashcard({Flashcard? flashcard, int? index}) async {
+    final result = await showDialog<Flashcard>(
+      context: context,
+      builder: (context) => FlashcardDialog(flashcard: flashcard),
+    );
+    if (result != null) {
+      setState(() {
+        if (index != null) {
+          flashcards[index] = result;
+        } else {
+          flashcards.add(result);
+          currentIndex = flashcards.length - 1;
+        }
+      });
+    }
+  }
+  void _deleteCurrentCard() {
+    if (flashcards.isEmpty) return;
+    setState(() {
+      flashcards.removeAt(currentIndex);
+      if (currentIndex >= flashcards.length && currentIndex > 0) {
+        currentIndex--;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +91,6 @@ class _QuizScreenState extends State<QuizScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-
                   CircleAvatar(
                     radius: 30, // You can adjust the size
                     backgroundImage: AssetImage("images/intro_Screen.png"),
@@ -80,7 +100,14 @@ class _QuizScreenState extends State<QuizScreen> {
             ),
             SizedBox(height: 160),
 
-            FlashcardWidget(flashcard: flashcards[currentIndex]),
+            FlashcardWidget(
+                flashcards: flashcards[currentIndex],
+                onEdit: () => _addOrEditFlashcard(
+                flashcard: flashcards[currentIndex],
+                index: currentIndex,
+              ),
+              onDelete: _deleteCurrentCard,
+            ),
 
             SizedBox(height: 20),
             Row(
@@ -89,30 +116,16 @@ class _QuizScreenState extends State<QuizScreen> {
                 ElevatedButton(onPressed: _previousCard, child: Text("Previous")),
                 ElevatedButton(onPressed: _nextCard, child: Text("Next")),
               ],
-            )
-
+            ),
           ],
         ),
-
-
-
-
-
-        /* bottomNavigationBar: NavigationBar(
-            backgroundColor: Colors.transparent,
-            selectedIndex: 0,
-            onDestinationSelected: (int index){
-              /// Handle navigation here
-            },
-            indicatorColor: Colors.lightBlueAccent.shade400,
-            height: 60,
-            destinations: [
-              NavigationDestination(icon: Icon(Icons.home), label: "Home"),
-              NavigationDestination(icon: Icon(Icons.favorite), label: "favorite"),
-              NavigationDestination(icon: Icon(Icons.shopping_cart), label: "Cart"),
-            ]
-        ),*/
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _addOrEditFlashcard(),
+          child: Icon(Icons.add),
+        ),
       ),
     );
   }
 }
+
+

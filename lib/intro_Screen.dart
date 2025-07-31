@@ -15,11 +15,7 @@ class HomeScreen extends StatelessWidget {
               style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
-            const Text(
-              'Test your knowledge with our interactive quiz.',
-              style: TextStyle(fontSize: 18),
-              textAlign: TextAlign.center,
-            ),
+
             const SizedBox(height: 40),
             Image.asset(
                 "images/intro_Screen.png",
@@ -51,9 +47,6 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
-
-
               )
             ),
           ],
