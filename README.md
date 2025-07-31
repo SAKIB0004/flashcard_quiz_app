@@ -8,10 +8,10 @@
 
 - ✅ View flashcards with **question-answer** toggle
 - ✅ Navigate between cards using **Next** and **Previous** buttons
-- ✅ Add new flashcards
-- ✅ Edit existing flashcards
-- ✅ Delete flashcards
-- ✅ Drawer navigation with menu icon
+- ✅ `Add` new flashcards
+- ✅ `Edit` existing flashcards
+- ✅ `Delete` flashcards
+- ✅ `Drawer` navigation with menu icon
 - ✅ Clean, modern interface with responsive design
 
 
